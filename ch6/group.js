@@ -1,3 +1,15 @@
+class GroupIterator {
+        constructor(group) {
+                this.i = 0;
+                this.group = group;
+        }
+        next() {
+                if (this.i == this.group.data.length) return {done: true};
+
+                return {value: this.group.data[this.i++], done: false};
+        }
+}
+
 class Group {
 	constructor() {
 		this.data=[];
@@ -22,4 +34,12 @@ class Group {
 		}
 		return result;
 	}
+
+	[Symbol.iterator]() {
+        	return new GroupIterator(this);
+	}
+}
+
+for (let value of Group.from(["a", "b", "c"])) {
+  print(value);
 }
